@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
 
-puts "What's up?"
 require 'cstimer_analyser_cli'
 puts CstimerAnalyserCli::main()

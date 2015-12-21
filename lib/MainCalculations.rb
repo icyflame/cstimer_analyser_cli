@@ -2,7 +2,7 @@ require "gnuplot"
 require "statsample"
 
 class MainCalculations
-	attr_accessor :file_name, :all_time
+	attr_accessor :file_name, :all_times
 
 	def initialize(file_name)
 		@file_name = file_name

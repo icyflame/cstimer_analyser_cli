@@ -1,9 +1,9 @@
 require "cstimer_analyser_cli/version"
 require "optparse"
-require "./MainCalculations.rb"
+require "MainCalculations.rb"
 
 module CstimerAnalyserCli
-	def main
+	def self.main
 		# code to parse the command line options
 		options = {}
 		OptionParser.new do |opts|
@@ -32,7 +32,7 @@ module CstimerAnalyserCli
 			puts "You need to supply an input file path"
 			exit
 		end
-
-		return MainCalculations.new(options[:input_file]).file_name
+		mainCalcObj = MainCalculations.new(options[:input_file])
+		return "#{mainCalcObj.file_name} contains #{mainCalcObj.all_times.count} times."
 	end
 end
