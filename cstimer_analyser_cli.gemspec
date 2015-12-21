@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = CstimerAnalyserCli::VERSION
   spec.authors       = ["Siddharth Kannan"]
   spec.email         = ["kannan.siddharth12@gmail.com"]
-
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+	spec.executables << 'cstimer-analyse'
+  spec.summary       = %q{Analyse your solving times, generated using cstimer}
+  spec.description   = %q{Gain insights into how you have improved over time. Has graphs, and other fancy stuff.}
+  spec.homepage      = "http://icyflame.me/"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -30,4 +30,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
+
+	spec.add_dependency "statsample", "~> 0"
+	spec.add_dependency "optparse", "> 0.5.1"
+	spec.add_dependency "gnuplot", "~> 2.6.2"
+	#spec.add_dependency "highline"
+	#spec.add_dependency "cli-console"
 end
