@@ -31,9 +31,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
 
-	spec.add_dependency "statsample", "~> 0"
-	spec.add_dependency "optparse", "> 0.5.1"
-	spec.add_dependency "gnuplot", "~> 2.6.2"
+	spec.add_dependency "statsample"
+	spec.add_dependency "gnuplot"
 	#spec.add_dependency "highline"
 	#spec.add_dependency "cli-console"
 end
