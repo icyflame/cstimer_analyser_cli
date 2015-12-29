@@ -1,13 +1,26 @@
 require "gnuplot"
 require "statsample"
+require "cli-console"
 
 class MainCalculations
+	private
+	extend CLI::Task
+
+	public
+
 	attr_accessor :file_name, :all_times
 
 	def initialize(file_name)
 		@file_name = file_name
 		@all_times = Array.new
 		read_from_file
+	end
+
+	usage 'Say Hello to the user'
+	desc 'Imitating human warmth in a computer program!'
+	def hello(params)
+		puts "Hello, what's up?"
+		puts "You gave me #{params.inspect} as parameters"
 	end
 
 	def read_from_file
@@ -27,9 +40,12 @@ class MainCalculations
 				end
 			end
 		end
+		@main_vector = @all_times.to_vector(:scale)
 	end
 
-	def basic_stats
+	usage 'Show some basic statistics about the solvetimes'
+	desc 'Statistics include average, standard deviation, best and worst times'
+	def basic_stats(params)
 		p '----------------------------'
 		p '----------------------------'
 		p '-------- STATISTICS --------'
@@ -39,18 +55,12 @@ class MainCalculations
 		p 'Worst solvetime          : %0.2f' % @main_vector.max
 		p 'Mode solvetime           : %0.2f' % @main_vector.mode
 	end
-
-	def build_histogram
-		p @all_times.count
-		h = @all_times.to_vector(:scale)
-		# Statsample::Graph::Histogram.new(h).to_svg
-		p 'A histogram must have opened up!'
-		rb = ReportBuilder.new
-		rb.add(Statsample::Graph::Histogram.new(h))
-		rb.save_html('histogram.html')
-	end
-
-	def build_history_of_averages(num_solves)
+	
+	usage 'Show a history of averages, and how they changed over time'
+	desc 'avg 100: will show a history of your distinct average of 100 solves'
+	def build_history_of_averages(params)
+		raise ArgumentError, "What is the number of solves to computer average for?" unless params.count >= 1
+		num_solves = params[0].to_i
 		num_datapoints = (@all_times.count / num_solves).to_i
 		all_means = Array.new
 		for i in 0..num_datapoints
@@ -75,8 +85,12 @@ class MainCalculations
 			end
 		end
 	end
-
-	def build_history_of_best_solves(num_solves)
+	
+	usage 'Build a history of your best solves over time'
+	desc 'best 100: plots the best solve among 100 discontinuous and non-overlapping solves'
+	def build_history_of_best_solves(params)
+		raise ArgumentError, "What is the number of solves to computer average for?" unless params.count >= 1
+		num_solves = params[0].to_i
 		num_datapoints = (@all_times.count / num_solves).to_i
 		all_best_times = Array.new
 		for i in 0..num_datapoints
@@ -101,8 +115,10 @@ class MainCalculations
 			end
 		end
 	end
-
-	def build_graph_of_solve_times
+	
+	usage 'Build a line graph of your solvetime evolution'
+	desc 'history: A congested graph showing when your best and lowest times were achieved, helpful in noticing patterns'
+	def build_graph_of_solve_times(params)
 		Gnuplot.open do |gp|
 			Gnuplot::Plot.new( gp ) do |plot|
 
@@ -121,7 +137,12 @@ class MainCalculations
 		end
 	end
 
-	def build_graph_of_last_few_solve_times(num_solves)
+	usage 'Solvetime evolution for the last few times, want to know how that last session went?'
+	desc 'last 100: plots the last 100 solve times with index on the horizontal axis'
+
+	def build_graph_of_last_few_solve_times(params)
+		raise ArgumentError, "What is the number of solves to computer average for?" unless params.count >= 1
+		num_solves = params[0].to_i
 		Gnuplot.open do |gp|
 			Gnuplot::Plot.new( gp ) do |plot|
 
@@ -142,8 +163,15 @@ class MainCalculations
 			end
 		end
 	end
+	
+	usage 'Find where most of your times lie'
+	desc 'distribute 20 25 0.5: will show a histogram with 10 bins, with the first bin at 20-20.5 and the last bin for 24.5-25, and the height of the bin being the number of solves in that interval'
+	def build_hist_of_time_distribution(params)
+		raise ArgumentError, "What is the number of solves to computer average for?" unless params.count >= 3
+		start_time = params[0].to_f
+		end_time = params[1].to_f
+		min_distance = params[2].to_f
 
-	def build_hist_of_time_distribution(start_time, end_time, min_distance)
 		main_hash = Hash.new(0)
 		num_bins = ((end_time - start_time) / min_distance).to_f.ceil
 
