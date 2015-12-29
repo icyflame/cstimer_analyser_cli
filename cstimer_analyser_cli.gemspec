@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = CstimerAnalyserCli::VERSION
   spec.authors       = ["Siddharth Kannan"]
   spec.email         = ["kannan.siddharth12@gmail.com"]
-	spec.executables << 'cstimer-analyse'
+
   spec.summary       = %q{Analyse your solving times, generated using cstimer}
-  spec.description   = %q{Gain insights into how you have improved over time. Has graphs, and other fancy stuff.}
+  spec.description   = %q{Gain insights into how you have improved over time. Has graphs, histograms, and other fancy stuff!}
   spec.homepage      = "http://icyflame.me/"
   spec.license       = "MIT"
 
@@ -29,10 +29,10 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", "~> 0.0"
 
 	spec.add_dependency "statsample"
 	spec.add_dependency "gnuplot"
-	#spec.add_dependency "highline"
-	#spec.add_dependency "cli-console"
+	spec.add_dependency "highline"
+	spec.add_dependency "cli-console"
 end
