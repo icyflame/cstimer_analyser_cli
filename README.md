@@ -1,8 +1,12 @@
-# CstimerAnalyserCli
+# csTimer Analyser CLI
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cstimer_analyser_cli`. To experiment with that code, run `bin/console` for an interactive prompt.
+> Gain insights about your speedcubing times, find [examples here!](https://github.com/icyflame/cstimer-analyse#what-does-this-do)
 
-TODO: Delete this and the text above, and describe your gem
+[![Gem Version](https://badge.fury.io/rb/cstimer_analyser_cli.svg)](https://badge.fury.io/rb/cstimer_analyser_cli)
+
+Export your times and then pass it to this gem. This will drop you into an immersive
+CLI experience. You can use the `help` command in this shell to find the options
+available to you, and use the commands appropriately.
 
 ## Installation
 
@@ -22,7 +26,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+After installing the gem, run `cstimer-analyse` from a terminal.
 
 ## Development
 
@@ -32,10 +36,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cstimer_analyser_cli. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [this repo](https://github.com/icyflame/cstimer_analyser_cli). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+Copyright 2015 [Siddharth Kannan](http://icyflame.github.io)
 
