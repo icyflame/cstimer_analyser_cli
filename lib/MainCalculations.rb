@@ -10,10 +10,11 @@ class MainCalculations
 
 	attr_accessor :file_name, :all_times
 
-	def initialize(file_name, json=false)
+	def initialize(file_name, json=false, session="")
 		@file_name = file_name
 		@all_times = Array.new
 		@json_file = json
+		@session = session
 		read_from_file
 	end
 
@@ -25,7 +26,24 @@ class MainCalculations
 	end
 
 	def read_from_file
-		if not @json_file
+		if @json_file
+			start_reading = false
+			require 'json'
+			file_obj = JSON.parse(File.read(@file_name))
+
+			# check if given session is in the file
+			if not file_obj.keys.include?(@session)
+				p "Provided session (#{@session})was not there in the file"
+				p 'Session names are generally session2, session3, etc'
+				exit 1
+			end
+
+			# session is in the file
+
+			session_obj = JSON.parse(file_obj[@session])
+			p session_obj.length
+
+		else
 			start_reading = false
 			# read the input file
 			File.open(@file_name, "r") do |filin|
@@ -45,7 +63,7 @@ class MainCalculations
 			@main_vector = @all_times.to_vector(:scale)
 		end
 	end
-	
+
 	usage 'Output the number of solves that were provided by the user'
 	desc 'This is a quick check to ensure that the file provided by the user was imported'
 	def number_of_points(params)

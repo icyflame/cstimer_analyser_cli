@@ -47,7 +47,7 @@ module CstimerAnalyserCli
 			exit 1
 		end
 
-		calculater = MainCalculations.new(options[:input_file], options[:input_json] ? true : false)
+		calculater = MainCalculations.new(options[:input_file], options[:input_json] ? true : false, options[:session])
 
 		io = HighLine.new
 		console = CLI::Console.new(io)
