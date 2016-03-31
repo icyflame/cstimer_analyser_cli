@@ -31,6 +31,8 @@ module CstimerAnalyserCli
 					p "You can't proceed!"
 				end
 			end
+
+			# TODO - add support for multiple sessions
 		end.parse!
 
 		# validation section

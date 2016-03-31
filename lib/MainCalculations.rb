@@ -41,7 +41,11 @@ class MainCalculations
 			# session is in the file
 
 			session_obj = JSON.parse(file_obj[@session])
-			p session_obj.length
+			#p session_obj.length
+
+			# now check each object and push the float
+			# value of the solvetime into the main object
+			# TODO
 
 		else
 			start_reading = false
