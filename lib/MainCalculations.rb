@@ -10,9 +10,10 @@ class MainCalculations
 
 	attr_accessor :file_name, :all_times
 
-	def initialize(file_name)
+	def initialize(file_name, json=false)
 		@file_name = file_name
 		@all_times = Array.new
+		@json_file = json
 		read_from_file
 	end
 
@@ -24,23 +25,31 @@ class MainCalculations
 	end
 
 	def read_from_file
-		start_reading = false
-		# read the input file
-		File.open(@file_name, "r") do |filin|
-			while(line = filin.gets)
-				if not start_reading and /Time\sList/.match(line)
-					start_reading = true
-				end
+		if not @json_file
+			start_reading = false
+			# read the input file
+			File.open(@file_name, "r") do |filin|
+				while(line = filin.gets)
+					if not start_reading and /Time\sList/.match(line)
+						start_reading = true
+					end
 
-				if start_reading
-					matches = line.scan(/\d{2}.\d{2}/)
-					matches.each do |match|
-						@all_times.push(match.to_f)
+					if start_reading
+						matches = line.scan(/\d{2}.\d{2}/)
+						matches.each do |match|
+							@all_times.push(match.to_f)
+						end
 					end
 				end
 			end
+			@main_vector = @all_times.to_vector(:scale)
 		end
-		@main_vector = @all_times.to_vector(:scale)
+	end
+	
+	usage 'Output the number of solves that were provided by the user'
+	desc 'This is a quick check to ensure that the file provided by the user was imported'
+	def number_of_points(params)
+		p "#{@all_times.count} solves were in the input file"
 	end
 
 	usage 'Show some basic statistics about the solvetimes'
@@ -55,7 +64,7 @@ class MainCalculations
 		p 'Worst solvetime          : %0.2f' % @main_vector.max
 		p 'Mode solvetime           : %0.2f' % @main_vector.mode
 	end
-	
+
 	usage 'Show a history of averages, and how they changed over time'
 	desc 'avg 100: will show a history of your distinct average of 100 solves'
 	def build_history_of_averages(params)
@@ -85,7 +94,7 @@ class MainCalculations
 			end
 		end
 	end
-	
+
 	usage 'Build a history of your best solves over time'
 	desc 'best 100: plots the best solve among 100 discontinuous and non-overlapping solves'
 	def build_history_of_best_solves(params)
@@ -115,7 +124,7 @@ class MainCalculations
 			end
 		end
 	end
-	
+
 	usage 'Build a line graph of your solvetime evolution'
 	desc 'history: A congested graph showing when your best and lowest times were achieved, helpful in noticing patterns'
 	def build_graph_of_solve_times(params)
@@ -163,7 +172,7 @@ class MainCalculations
 			end
 		end
 	end
-	
+
 	usage 'Find where most of your times lie'
 	desc 'distribute 20 25 0.5: will show a histogram with 10 bins, with the first bin at 20-20.5 and the last bin for 24.5-25, and the height of the bin being the number of solves in that interval'
 	def build_hist_of_time_distribution(params)

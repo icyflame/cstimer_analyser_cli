@@ -16,26 +16,38 @@ module CstimerAnalyserCli
 			end
 			opts.on("-i=INPUT", "--input-file=INPUT", "Input file path") do |i|
 				options[:input_file] = i
-				if not i
-					p "You need to pass an input file!"
+				#if not i
+				#p "You need to pass an input file!"
+				#end
+			end
+			opts.on("-j=INPUT", "--input-json-file=INPUT", "Input file path - in case using the export option") do |filename|
+				options[:input_file] = filename
+				options[:input_json] = true
+			end
+
+			opts.on("-s=SESSION", "--session=SESSION", "Name of the session to analyse") do |session|
+				options[:session] = session
+				if options[:input_json] and not session
+					p "You can't proceed!"
 				end
 			end
 		end.parse!
 
-		#VERBOSE = options[:verbose]
-
-		#if VERBOSE
-		#p "Options read from the command line:"
-		#p options
-		#end
+		# validation section
 
 		# do not allow user to proceed without input file
 		if not options[:input_file]
-			puts "You need to supply an input file path"
-			exit
+			puts 'You need to supply an input file path'
+			exit 1
 		end
 
-		calculater = MainCalculations.new(options[:input_file])
+		# if JSON file was entered, session must be entered as well
+		if options[:input_json] and not options[:session]
+			p 'You must provide the name of a session'
+			exit 1
+		end
+
+		calculater = MainCalculations.new(options[:input_file], options[:input_json] ? true : false)
 
 		io = HighLine.new
 		console = CLI::Console.new(io)
@@ -43,9 +55,11 @@ module CstimerAnalyserCli
 		console.addCommand('hello', calculater.method(:hello), "Say hello!")
 		console.addAlias('hi', 'hello')
 
+		console.addCommand('count', calculater.method(:number_of_points), "Number of datapoints!")
+
 		console.addCommand('statistics', calculater.method(:basic_stats), "Show some basic statistics")
 		console.addAlias('stats', 'statistics')
-		
+
 		console.addCommand('average', calculater.method(:build_history_of_averages), "Show the evolution of averages over time")
 		console.addAlias('avg', 'average')
 
