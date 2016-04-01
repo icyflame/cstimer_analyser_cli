@@ -78,14 +78,14 @@ class MainCalculations
 	usage 'Show some basic statistics about the solvetimes'
 	desc 'Statistics include average, standard deviation, best and worst times'
 	def basic_stats(params)
-		p '----------------------------'
-		p '----------------------------'
-		p '-------- STATISTICS --------'
-		p 'Mean of the solvetimes   : %0.2f' % @main_vector.mean
-		p 'Median of the solvetimes : %0.2f' % @main_vector.median
-		p 'Best solvetime           : %0.2f' % @main_vector.min
-		p 'Worst solvetime          : %0.2f' % @main_vector.max
-		p 'Mode solvetime           : %0.2f' % @main_vector.mode
+		puts '----------------------------'
+		puts '----------------------------'
+		puts '-------- STATISTICS --------'
+		puts 'Mean of the solvetimes   : %0.2f' % @main_vector.mean
+		puts 'Median of the solvetimes : %0.2f' % @main_vector.median
+		puts 'Best solvetime           : %0.2f' % @main_vector.min
+		puts 'Worst solvetime          : %0.2f' % @main_vector.max
+		puts 'Mode solvetime           : %0.2f' % @main_vector.mode
 	end
 
 	usage 'Show a history of averages, and how they changed over time'
