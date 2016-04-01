@@ -46,6 +46,7 @@ class MainCalculations
 			# now check each object and push the float
 			# value of the solvetime into the main object
 			# TODO
+			session_obj.each{|time_obj| @all_times.push((time_obj[0][-1] / 1000.0).to_f)}
 
 		else
 			start_reading = false
@@ -64,8 +65,8 @@ class MainCalculations
 					end
 				end
 			end
-			@main_vector = @all_times.to_vector(:scale)
 		end
+		@main_vector = @all_times.to_vector(:scale)
 	end
 
 	usage 'Output the number of solves that were provided by the user'
